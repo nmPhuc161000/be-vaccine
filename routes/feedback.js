@@ -3,6 +3,6 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const { submitFeedback } = require('../controllers/feedbackController');
 
-router.post('/', auth, submitFeedback);
+router.post('/submit-feedback', auth, submitFeedback);
 
 module.exports = router;
