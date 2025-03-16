@@ -1,9 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
-const { bookAppointment, getAppointments } = require('../controllers/appointmentController');
+const { auth, checkRole } = require('../middleware/auth');
+const {
+  bookAppointment,
+  getAppointments,
+  cancelAppointment,
+  updateAppointmentStatus,
+} = require('../controllers/appointmentController');
 
+// Đặt lịch hẹn
 router.post('/book-appointment', auth, bookAppointment);
-router.get('/get-appointments', auth, getAppointments);
+
+// Lấy danh sách lịch hẹn
+router.get('/get-appointments', [auth, checkRole(['admin', 'staff'])], getAppointments);
+
+// Hủy lịch hẹn
+router.put('/cancel-appointment/:id', auth, cancelAppointment);
+
+// Cập nhật trạng thái lịch hẹn (ví dụ: từ pending sang confirmed)
+router.put('/update-appointment-status/:id', auth, updateAppointmentStatus);
 
 module.exports = router;
