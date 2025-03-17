@@ -54,6 +54,9 @@ const startServer = async () => {
     // Tạo tài khoản Admin nếu chưa tồn tại
     await createAdminAccount();
 
+    // Khởi chạy lập lịch gửi thông báo
+    require('./controllers/reminderScheduler');
+
     // Routes
     app.use('/api/auth', require('./routes/auth'));
     app.use('/api/users', require('./routes/user'));

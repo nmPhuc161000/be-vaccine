@@ -73,6 +73,9 @@ exports.getAppointments = async (req, res) => {
   try {
     const { childId, status, date } = req.query;
 
+    // Log vai trò người dùng
+    console.log('User role:', req.user.role);
+    
     // Tạo filter dựa trên vai trò của người dùng
     let filter = {};
 
@@ -138,6 +141,7 @@ exports.cancelAppointment = async (req, res) => {
     }
 
     appointment.status = 'canceled';
+    appointment.reminderSent = false; // Đặt lại reminderSent thành false
     await appointment.save();
     res.json({ msg: 'Appointment canceled', appointment });
   } catch (err) {
