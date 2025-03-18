@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const bcrypt = require('bcryptjs');
 const connectDB = require('./config/db');
 const User = require('./models/User');
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
 // Load env vars
 dotenv.config();
@@ -45,45 +45,37 @@ const createAdminAccount = async () => {
   }
 };
 
-// Kết nối MongoDB và khởi chạy server
-const startServer = async () => {
-  try {
-    await connectDB(); // Kết nối MongoDB
-    console.log('MongoDB connected');
+await connectDB(); // Kết nối MongoDB
+console.log('MongoDB connected');
 
-    // Tạo tài khoản Admin nếu chưa tồn tại
-    await createAdminAccount();
+// Tạo tài khoản Admin nếu chưa tồn tại
+await createAdminAccount();
 
-    // Khởi chạy lập lịch gửi thông báo
-    require('./controllers/reminderScheduler');
+// Khởi chạy lập lịch gửi thông báo
+require('./controllers/reminderScheduler');
 
-    // Routes
-    app.use('/api/auth', require('./routes/auth'));
-    app.use('/api/users', require('./routes/user'));
-    app.use('/api/children', require('./routes/child'));
-    app.use('/api/appointments', require('./routes/appointment'));
-    app.use('/api/vaccines', require('./routes/vaccine'));
-    app.use('/api/feedbacks', require('./routes/feedback'));
+// Routes
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/user'));
+app.use('/api/children', require('./routes/child'));
+app.use('/api/appointments', require('./routes/appointment'));
+app.use('/api/vaccines', require('./routes/vaccine'));
+app.use('/api/feedbacks', require('./routes/feedback'));
 
-    // Middleware xử lý lỗi toàn cục
-    app.use((err, req, res, next) => {
-      console.error(err.stack);
-      res.status(500).json({ msg: 'Something went wrong on the server' });
-    });
+// Middleware xử lý lỗi toàn cục
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ msg: 'Something went wrong on the server' });
+});
 
-    app.get("/", (req, res) => {
-      res.send("Hello world");
-    });
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
 
-    // // Khởi chạy server
-    // app.listen(PORT, () => {
-    //   console.log(`Server is running on port ${PORT}`);
-    // });
-  } catch (err) {
-    console.error('Failed to connect to MongoDB:', err.message);
-    process.exit(1); // Thoát ứng dụng nếu không kết nối được MongoDB
-  }
-};
+// // Khởi chạy server
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
 
 // Khởi chạy server
 startServer();
