@@ -75,10 +75,10 @@ const startServer = async () => {
       res.send("Hello world");
     });
 
-    // Khởi chạy server
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+    // // Khởi chạy server
+    // app.listen(PORT, () => {
+    //   console.log(`Server is running on port ${PORT}`);
+    // });
   } catch (err) {
     console.error('Failed to connect to MongoDB:', err.message);
     process.exit(1); // Thoát ứng dụng nếu không kết nối được MongoDB
