@@ -71,6 +71,10 @@ const startServer = async () => {
       res.status(500).json({ msg: 'Something went wrong on the server' });
     });
 
+    app.get("/", (req, res) => {
+      res.send("Hello world");
+    });
+
     // Khởi chạy server
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
