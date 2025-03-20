@@ -4,9 +4,6 @@ const helmet = require('helmet');
 const bcrypt = require('bcryptjs');
 const connectDB = require('./config/db');
 const User = require('./models/User');
-const PORT = process.env.PORT || 5000;
-
-
 
 // Load env vars
 dotenv.config();
