@@ -12,7 +12,7 @@ const {
 router.post('/book-appointment', auth, bookAppointment);
 
 // Lấy danh sách lịch hẹn
-router.get('/get-appointments', [auth, checkRole(['admin', 'staff'])], getAppointments);
+router.get('/get-appointments', auth, getAppointments);
 
 // Hủy lịch hẹn
 router.put('/cancel-appointment/:id', auth, cancelAppointment);
