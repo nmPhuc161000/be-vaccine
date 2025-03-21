@@ -6,6 +6,7 @@ const {
   getAppointments,
   cancelAppointment,
   updateAppointmentStatus,
+  getAppointmentById
 } = require('../controllers/appointmentController');
 
 // Đặt lịch hẹn
