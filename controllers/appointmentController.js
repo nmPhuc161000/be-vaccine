@@ -128,6 +128,33 @@ exports.getAppointments = async (req, res) => {
   }
 };
 
+exports.getAppointmentById = async (req, res) => {
+  try {
+    const appointmentId = req.params.id;
+
+    // Tìm cuộc hẹn theo ID
+    const appointment = await Appointment.findById(appointmentId)
+      .populate('childId', 'name dob')
+      .populate('vaccineId', 'name price');
+
+    // Kiểm tra xem cuộc hẹn có tồn tại không
+    if (!appointment) {
+      return res.status(404).json({ msg: 'Appointment not found' });
+    }
+
+    // Kiểm tra quyền truy cập
+    if (req.user.role === 'customer' && appointment.userId.toString() !== req.user.id) {
+      return res.status(403).json({ msg: 'You do not have permission to view this appointment' });
+    }
+
+    // Trả về thông tin cuộc hẹn
+    res.json(appointment);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error', error: err.message });
+  }
+};
+
 exports.cancelAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
