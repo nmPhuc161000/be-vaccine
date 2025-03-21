@@ -181,6 +181,12 @@ exports.updateAppointmentStatus = async (req, res) => {
   const { status } = req.body;
 
   try {
+    // Kiểm tra vai trò của người dùng
+    if (req.user.role !== 'staff' && req.user.role !== 'admin') {
+      return res.status(403).json({ msg: 'Permission denied. Only staff or admin can update appointment status.' });
+    }
+
+    // Tìm cuộc hẹn theo ID
     const appointment = await Appointment.findById(req.params.id);
     if (!appointment) {
       return res.status(404).json({ msg: 'Appointment not found' });
@@ -189,6 +195,8 @@ exports.updateAppointmentStatus = async (req, res) => {
     // Cập nhật trạng thái
     appointment.status = status;
     await appointment.save();
+
+    // Trả về thông tin cuộc hẹn đã cập nhật
     res.json({ msg: 'Appointment status updated', appointment });
   } catch (err) {
     console.error(err.message);
