@@ -9,9 +9,6 @@ exports.getChildren = async (req, res) => {
       filter.userId = req.user.id;
     }
 
-    // Nếu là nhân viên hoặc admin, lấy tất cả trẻ em
-    // (không cần thêm điều kiện vào filter)
-
     // Lấy danh sách trẻ em
     const children = await Child.find(filter)
       .populate('userId', 'name email'); // Populate thông tin người dùng (nếu cần)

@@ -56,6 +56,7 @@ app.use('/api/children', require('./routes/child'));
 app.use('/api/appointments', require('./routes/appointment'));
 app.use('/api/vaccines', require('./routes/vaccine'));
 app.use('/api/feedbacks', require('./routes/feedback'));
+app.use('/api/pe', require('./routes/pe'));
 
 // Export app cho Vercel
 module.exports = app;
